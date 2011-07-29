@@ -3,7 +3,6 @@ require 'barby/barcode'
 
 module Barby
 
-
   #QrCode is a thin wrapper around the RQRCode library
   class QrCode < Barcode2D
 

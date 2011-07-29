@@ -64,6 +64,10 @@ module Barby
       barcode.respond_to?(:two_dimensional?) && barcode.two_dimensional?
     end
 
+    def maxi_code?
+      barcode.respond_to?(:maxi_code?) && barcode.maxi_code?
+    end
+
 
     #Converts the barcode's encoding (a string containing 1s and 0s)
     #to true and false values (1 == true == "black bar")
@@ -71,7 +75,15 @@ module Barby
     #If the barcode is 2D, each line will be converted to an array
     #in the same way
     def booleans(reload=false)#:doc:
-      if two_dimensional?
+      if maxi_code?
+        encoding(reload).map do |l|
+          l.split(//).map do |c|
+            s = true if c == '1'
+            s = false if c == '0'
+            s
+          end
+        end
+      elsif two_dimensional?
         encoding(reload).map{|l| l.split(//).map{|c| c == '1' } }
       else
         encoding(reload).split(//).map{|c| c == '1' }

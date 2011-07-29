@@ -62,6 +62,9 @@ module Barby
       is_a? Barcode2D
     end
 
+    def maxi_code?
+      is_a? MaxiCode
+    end
 
     def method_missing(name, *args, &b)#:nodoc:
       #See if an outputter has registered this method

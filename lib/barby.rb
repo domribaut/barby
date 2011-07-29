@@ -14,5 +14,6 @@ require 'barby/barcode/qr_code'
 require 'barby/barcode/code_25'
 require 'barby/barcode/code_25_interleaved'
 require 'barby/barcode/code_25_iata'
+require 'barby/barcode/maxi_code'
 
 require 'barby/outputter'
