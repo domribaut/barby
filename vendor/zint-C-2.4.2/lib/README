@@ -1,0 +1,2 @@
+Link libzint.2.4.2 to the right library for your platform.
+If you need to build zlint you will find a tarball with the source in the directory ~/vendor/zint-C-2.4.2/src
