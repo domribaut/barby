@@ -7,14 +7,17 @@ module MaxiCodeEncoder
   BARCODE_MAXICODE = 57
 
   class ZINT_SYMBOL < FFI::Struct
-   # attr_accessor :symbology
+    # attr_accessor :symbology
     layout :symbology, :int,
-           :encoded_data, [:uchar, 178] #WIP
+           :encoded_data, :pointer
+  end
+  class ZINT_ENCODED_ROW < FFI::Struct
+
   end
 
-  attach_function :ZBarcode_ValidID, [ :int ] , :int
-  attach_function :ZBarcode_Create,[], ZINT_SYMBOL.by_ref;
-  attach_function  :ZBarcode_Encode, [ZINT_SYMBOL, :uchar,:int ], :int
+  attach_function :ZBarcode_ValidID, [:int], :int
+  attach_function :ZBarcode_Create, [], ZINT_SYMBOL.by_ref;
+  attach_function :ZBarcode_Encode, [:pointer, :string, :int], :int
   #ZINT_EXTERN int ZBarcode_Encode(struct zint_symbol *symbol, unsigned char *input, int length);
 
 end

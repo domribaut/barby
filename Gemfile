@@ -17,6 +17,7 @@ group :outputters do
   gem 'prawn',      '0.11.1'
   gem 'rmagick',    '2.13.1'
   gem 'chunky_png', '1.2.0'
+  gem 'ffi'
   platforms :ruby_18 do
     gem 'semacode',   '0.7.4'
     gem 'pdf-writer', '1.1.8'
