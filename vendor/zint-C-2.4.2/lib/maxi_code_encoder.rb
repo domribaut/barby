@@ -9,15 +9,14 @@ module MaxiCodeEncoder
   class ZINT_SYMBOL < FFI::Struct
     # attr_accessor :symbology
     layout :symbology, :int,
-           :encoded_data, :pointer
+           :encoded_data, [[:uchar, 178], 143]
   end
-  class ZINT_ENCODED_ROW < FFI::Struct
 
-  end
+
 
   attach_function :ZBarcode_ValidID, [:int], :int
   attach_function :ZBarcode_Create, [], ZINT_SYMBOL.by_ref;
-  attach_function :ZBarcode_Encode, [:pointer, :string, :int], :int
+  #attach_function :ZBarcode_Encode, [:pointer, :string, :int], :int
   #ZINT_EXTERN int ZBarcode_Encode(struct zint_symbol *symbol, unsigned char *input, int length);
 
 end
