@@ -5,6 +5,8 @@ module MaxiCodeEncoder
   ffi_lib 'libzint.2.4.2'
 
   BARCODE_MAXICODE = 57
+  BARCODE_CODE128 = 20
+  UNICODE_MODE = 1
 
   class DataArray < FFI::Struct
     layout :array, [:uchar, 178]
@@ -30,9 +32,28 @@ module MaxiCodeEncoder
   end
 
   class ZINT_SYMBOL < FFI::Struct
-    # attr_accessor :symbology
+
     layout :symbology, :int,
-           :encoded_data, [DataArray, 143]
+           :height, :int,
+           :whitespace_width, :int,
+           :border_width, :int,
+           :output_options, :int,
+           :fgcolour, [:char, 10],
+           :bgcolour, [:char, 10],
+           :outfile, [:char, 256],
+           :scale, :float,
+           :option_1, :int,
+           :option_2, :int,
+           :option_3, :int,
+           :show_hrt, :int,
+           :input_mode, :int,
+           :text, [:uchar,128],
+           :rows, :int,
+           :width, :int,
+           :primary, [:char, 128],
+           :encoded_data, [DataArray, 143],
+           :row_height, [:int, 178],
+           :errtxt, [:char, 100]
 
     def encoded_data_row_as_string idx
         #todo add validation of idx
@@ -44,7 +65,8 @@ module MaxiCodeEncoder
 
   attach_function :ZBarcode_ValidID, [:int], :int
   attach_function :ZBarcode_Create, [], ZINT_SYMBOL.by_ref;
-  #attach_function :ZBarcode_Encode, [:pointer, :string, :int], :int
+  attach_function :ZBarcode_Encode, [:pointer, :string, :int], :int
+  attach_function :module_is_set, [:pointer, :int, :int], :int
   #ZINT_EXTERN int ZBarcode_Encode(struct zint_symbol *symbol, unsigned char *input, int length);
 
 end

@@ -23,7 +23,18 @@ module Barby
         orig_xpos = xpos
 
         if barcode.maxi_code?
-           pdf.text "maxi code here from outputter", {:overflow => :shrink_to_fit, :align => :center, :valign => :center}
+           pdf.text "draw bull eye", {:overflow => :shrink_to_fit, :align => :center, :valign => :center}
+             boolean_groups.reverse_each do |groups|
+            groups.each do |hexagone,amount|
+              if hexagone
+             #draw_hexagone
+             #   pdf.fill
+              end
+              xpos += (xdim*amount)
+            end
+            xpos = orig_xpos
+            ypos += ydim
+          end
         elsif barcode.two_dimensional?
           boolean_groups.reverse_each do |groups|
             groups.each do |bar,amount|

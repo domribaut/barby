@@ -75,15 +75,7 @@ module Barby
     #If the barcode is 2D, each line will be converted to an array
     #in the same way
     def booleans(reload=false)#:doc:
-      if maxi_code?
-        encoding(reload).map do |l|
-          l.split(//).map do |c|
-            s = true if c == '1'
-            s = false if c == '0'
-            s
-          end
-        end
-      elsif two_dimensional?
+      if two_dimensional?
         encoding(reload).map{|l| l.split(//).map{|c| c == '1' } }
       else
         encoding(reload).split(//).map{|c| c == '1' }
