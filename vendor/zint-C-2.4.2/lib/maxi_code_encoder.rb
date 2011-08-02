@@ -6,12 +6,40 @@ module MaxiCodeEncoder
 
   BARCODE_MAXICODE = 57
 
+  class DataArray < FFI::Struct
+    layout :array, [:uchar, 178]
+
+    def [](idx)
+      if idx.is_a?(Integer)
+        self[:array][idx]
+      else
+        super(idx)
+      end
+    end
+
+    def []=(idx, val)
+      if idx.is_a?(Integer)
+        self[:array][idx] = val
+      else
+        super(idx, val)
+      end
+    end
+
+
+
+  end
+
   class ZINT_SYMBOL < FFI::Struct
     # attr_accessor :symbology
     layout :symbology, :int,
-           :encoded_data, [[:uchar, 178], 143]
-  end
+           :encoded_data, [DataArray, 143]
 
+    def encoded_data_row_as_string idx
+        #todo add validation of idx
+        self[:encoded_data][idx].to_ptr.read_string
+    end
+
+  end
 
 
   attach_function :ZBarcode_ValidID, [:int], :int

@@ -20,19 +20,19 @@ module MaxiCodeEncoder
       zint_symbol[:symbology].must_equal MaxiCodeEncoder::BARCODE_MAXICODE
     end
 
-    it "should retrieve encoding for input" do
+    it "should retrieve encoded data" do
       zint_symbol = MaxiCodeEncoder::ZBarcode_Create()
-      zint_symbol[:symbology] = MaxiCodeEncoder::BARCODE_MAXICODE
-
-      len = MaxiCodeEncoder::ZBarcode_Encode (zint_symbol, 'min input'.top, 9)
-
-      if len < 0
-        encode = "error, code = " + len
-      else
-        strPtr = zint_symbol[:encoded_data]
-        encode =   strPtr.null? ? [] : ptr.get_array_of_string(0, len).compact
-      end
-      p encode.to_s
+      zint_symbol[:encoded_data][0][0] = 48
+      zint_symbol[:encoded_data][0][1] = 49
+      zint_symbol[:encoded_data][1][0] = 48
+      zint_symbol[:encoded_data][1][1] = 49
+      zint_symbol[:encoded_data][2][0] = 49
+      zint_symbol[:encoded_data][2][1] = 49
+      #read them back
+      zint_symbol.encoded_data_row_as_string(0).must_equal "01"
+      zint_symbol.encoded_data_row_as_string(1).must_equal "01"
+      zint_symbol.encoded_data_row_as_string(2).must_equal "11"
+      zint_symbol.encoded_data_row_as_string(3).must_equal ""
     end
 
   end
