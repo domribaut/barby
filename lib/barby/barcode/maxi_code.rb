@@ -43,11 +43,6 @@ module Barby
       true
     end
 
-
-    private
-    def foo
-      :bar
-    end
   end
 
 
