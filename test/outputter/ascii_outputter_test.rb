@@ -1,10 +1,10 @@
-require 'test_helper'
+require '../test_helper'
 
 class AsciiOutputterTest < Barby::TestCase
 
   it "should render nil values and bar with special maxicode-characters O and H" do
     load_outputter('ascii')
-    barcode = Barby::MaxiCode.new('Encoding is hardcoded in MaxiCode')
+    barcode = Barby::MaxiCode.new('input is hardcoded in MaxiCode')
     AsciiOutputter.new(barcode)
 
     to_ascii = barcode.to_ascii

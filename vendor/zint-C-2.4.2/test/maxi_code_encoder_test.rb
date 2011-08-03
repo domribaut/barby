@@ -52,9 +52,9 @@ module MaxiCodeEncoder
     end
 
 
-    #it "should save the world" do
-    #  MaxiCodeEncoder::ZBarcode_Encode(@zint_symbol, @real_ish_input, 0)
-    #end
+    it "should endode a real-ish mode 3 maxicode" do
+      MaxiCodeEncoder::ZBarcode_Encode(@zint_symbol, @real_ish_input, 0).must_equal 0
+    end
 
     it "should produce the same encoding as the test from zint front end" do
       init_fasit_from_test
@@ -104,7 +104,7 @@ module MaxiCodeEncoder
           ["110110110011010111011101111010"],
           ["100100010100111111010101011001"],
           ["110011101001010001001010010100"],
-          ["100111010111010011100110100111"]
+          ["100111010111010011100110100111Hei Dom"]
       ]
 
     end
