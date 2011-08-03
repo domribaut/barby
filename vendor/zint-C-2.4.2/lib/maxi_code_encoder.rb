@@ -27,8 +27,6 @@ module MaxiCodeEncoder
       end
     end
 
-
-
   end
 
   class ZINT_SYMBOL < FFI::Struct
@@ -47,7 +45,7 @@ module MaxiCodeEncoder
            :option_3, :int,
            :show_hrt, :int,
            :input_mode, :int,
-           :text, [:uchar,128],
+           :text, [:uchar, 128],
            :rows, :int,
            :width, :int,
            :primary, [:char, 128],
@@ -55,17 +53,24 @@ module MaxiCodeEncoder
            :row_height, [:int, 178],
            :errtxt, [:char, 100]
 
-    def encoded_data_row_as_string idx
-        #todo add validation of idx
-        self[:encoded_data][idx].to_ptr.read_string
-    end
-
   end
 
   attach_function :ZBarcode_ValidID, [:int], :int
   attach_function :ZBarcode_Create, [], ZINT_SYMBOL.by_ref;
   attach_function :ZBarcode_Encode, [:pointer, :string, :int], :int
   attach_function :module_is_set, [:pointer, :int, :int], :int
+
+  def self.encoding  zint_symbol
+      encoding = Array.new
+      (0..32).each do |row|
+        s=""
+        (0..29).each do |col|
+          s += MaxiCodeEncoder::module_is_set(zint_symbol, row, col).to_s
+        end
+        encoding << s
+      end
+    encoding
+  end
 
 end
 
